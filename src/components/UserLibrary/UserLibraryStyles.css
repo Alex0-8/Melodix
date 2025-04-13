@@ -1,0 +1,46 @@
+svg{
+    width: 22px;
+    fill: #000;
+}
+
+.library{
+    width: 35%;
+    min-width: 245px;
+    padding: 15px;
+    margin: 15px 10px 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 0px 0px 10px 3px #ada2e2;
+    border: 2px solid #a0ffe8;
+}
+
+.library > div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.remove-from-library{
+    width: 100px;
+    font-weight: 600;
+    font-size: 18px;
+    background-color: aqua;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.remove-from-library:hover{
+    transform: scale(.9);
+    background-color: red;
+}
+
+@media (prefers-color-scheme: dark){
+    svg{
+        fill: #b3b3b3;
+    }
+}

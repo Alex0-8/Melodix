@@ -1,34 +1,52 @@
-import React, {Component} from 'react';
-import Header from './components/header';
-import Song from './components/song';
+import React, {useEffect, useState} from 'react';
+import Header from './components/Header/header';
+import SearchResults from './components/SearchResults';
+import UserLibrary from './components/UserLibrary';
 import './styles.css';
 
-class App extends Component{
-  componentDidMount() {
-    console.log("La app se ha cargado")
+const App = () => {
+  //Lista de datos ficticios para los resultados de busqueda
+  const [searchResults] = useState([
+    {id: 1, name: "Luz de Neón", artist: "Aurora Vega", album: "Reflejos Urbanos"},
+    {id: 2, name: "Ecos del Ayer", artist: "Sombra Lunar", album: "Sombras y Recuerdos"},
+    {id: 3, name: "Caminos Paralelos", artist: "Esteban Cruz", album: "Destino Cruzado"},
+    {id: 4, name: "Horizonte Azul", artist: "Zafiro", album: "Cielos Abiertos"},
+    {id: 5, name: "Noche Estelar", artist: "Lía Nova", album: "Galaxia Interior"},
+    {id: 6, name: "Volver a Empezar", artist: "Daniela Mar", album: "Renacer"},
+  ]);
+
+  // useState para la biblioteca del usuario. Inicialmente vacia
+  const [library, setLibrary] = useState([]);
+
+  //useEffect para mostrar un mensaje en la consola cada vez que se actualice la biblioteca
+  useEffect(() => {
+    console.log("Se ha actualizado la biblioteca")
+  }, [library]);
+
+  //funcion para agregar canciones a la biblioteca
+  const addSongToLibrary = (song) => {
+    setLibrary(prevLibrary => {
+      if(prevLibrary.some(s => s.id === song.id)){ //condicional para evitar añadir canciones duplicadas
+        return prevLibrary;
+      }
+      return[...prevLibrary, song];
+    });
+  };
+
+  const removeSongFromLibrary = (id) => { // funcion para quitar una cancion de la biblioteca
+    setLibrary(prevLibrary => prevLibrary.filter(song => song.id !== id));
   }
 
-  render(){
-    return (
-      <div className="App">
-        <Header />
-        
-        <section className='songs-section'>
-          <div>
-            <i><svg data-encore-id="icon" role="img" aria-hidden="true" viewBox="0 0 24 24"><path d="M3 22a1 1 0 0 1-1-1V3a1 1 0 0 1 2 0v18a1 1 0 0 1-1 1zM15.5 2.134A1 1 0 0 0 14 3v18a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6.464a1 1 0 0 0-.5-.866l-6-3.464zM9 2a1 1 0 0 0-1 1v18a1 1 0 1 0 2 0V3a1 1 0 0 0-1-1z"></path></svg></i>
-            <p><span>Tu biblioteca</span></p>
-          </div>
-  
-          <Song name="Luz de Neón" artist="Aurora Vega" album="Reflejos Urbanos" />
-          <Song name="Ecos del Ayer" artist="Sombra Lunar" album="Sombras y Recuerdos" />
-          <Song name="Caminos Paralelos" artist="Esteban Cruz" album="Destino Cruzado" />
-          <Song name="Horizonte Azul" artist="Zafiro" album="Cielos Abiertos" />
-          <Song name="Noche Estelar" artist="Lía Nova" album="Galaxia Interior" />
-          <Song name="Volver a Empezar" artist="Daniela Mar" album="Renacer" />
-        </section>
-      </div>
-    );   
-  }
+  return (
+    <div className="App">
+      <Header />
+
+      <main>
+        <UserLibrary addedSong={library} onRemove={removeSongFromLibrary} />
+        <SearchResults songs={searchResults} onAdd={addSongToLibrary} />
+      </main>
+    </div>
+  );   
 }
 
 export default App;
