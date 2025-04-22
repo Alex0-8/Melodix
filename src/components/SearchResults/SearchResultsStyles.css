@@ -1,5 +1,7 @@
 .search-results{
-    width: 30%;
+    width: 50%;
+    max-height: 500px;
+    overflow-y: auto;
     min-width: 245px;
     padding: 15px;
     margin: 15px 10px 20px;
@@ -11,11 +13,26 @@
     border: 2px solid #a0ffe8;
 }
 
+.search-results::-webkit-scrollbar{
+    width: 7px;
+    background-color: #000;
+    border-radius: 5px;
+}
+
+.search-results::-webkit-scrollbar-thumb {
+    background: #c92ff8;
+    border-radius: 5px;
+}
+
+h2{
+    text-align: center;
+}
+
 .add-to-library{
     width: 100px;
     font-weight: 600;
     font-size: 18px;
-    background-color: aqua;
+    background-color: #00ffff;
     border-radius: 8px;
     border: none;
     cursor: pointer;
@@ -26,3 +43,21 @@
     transform: scale(.9);
 }
 
+a{
+    text-decoration: none;
+    color: #c92ff8;
+}
+
+.random-button{
+    width: 100px;
+    margin: 0 auto;
+    background-color: #00ff38;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.random-button:hover{
+    transform: scale(.9);
+}

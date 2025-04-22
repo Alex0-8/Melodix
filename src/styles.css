@@ -26,6 +26,14 @@ main{
         background-color: #121212;
     }
 
+    header > a {
+        color: #fff;
+    }
+
+    input[type="text"]{
+        background-color: #fff;
+    }
+
     .songs{
         background-color: #121212;
         box-shadow: none;

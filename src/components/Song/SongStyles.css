@@ -13,3 +13,7 @@ span{
     gap: 5px;
     border-bottom: 10px;
 }
+
+.song-details{
+    width: 50%;
+}

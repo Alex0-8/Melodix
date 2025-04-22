@@ -1,0 +1,19 @@
+.page-song-details{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 20px;
+}
+
+.album-img{
+    width: 200px;
+}
+
+.description{
+    max-width: 50%;
+}
+
+.loading-gif{
+    width: 400px;
+    margin: 0 auto;
+}

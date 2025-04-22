@@ -1,6 +1,7 @@
 import React from "react";
 import Song from "../Song/song";
 import './UserLibraryStyles.css';
+import { Link } from "react-router-dom";
 
 const UserLibrary = ({addedSong, onRemove}) => {
     return (
@@ -12,12 +13,16 @@ const UserLibrary = ({addedSong, onRemove}) => {
             {addedSong.length === 0 ? (
                 <p>No hay canciones en tu biblioteca.</p>
             ): (
-                addedSong.map(song => ( //pone a cada cancion de 'songs' dentro de un div 
-                    <div key={song.id} className='songs'>
-                        <Song name={song.name} artist={song.artist} album={song.album} />
-                        <button className="remove-from-library" onClick={() => onRemove(song.id)}>Quitar de la biblioteca</button>
-                    </div>
-                ))
+                addedSong.map(song => { //pone a cada cancion de 'songs' dentro de un div 
+                    const {idAlbum, strArtist, strLabel, strAlbum} = song;
+        
+                    return (
+                    <div key={idAlbum} className='songs'>
+                        <Song name={strLabel} artist={strArtist} album={strAlbum} />
+                        <Link to={`/song_details/${idAlbum}`}>Detalles</Link> {/*link para ir a la pagina de detalles de la cancion */}
+                        <button className="remove-from-library" onClick={() => onRemove(song.idAlbum)}>Quitar de la biblioteca</button>
+                    </div>)
+                })
             )}
         </section>
     )
