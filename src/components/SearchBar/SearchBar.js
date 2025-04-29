@@ -1,5 +1,6 @@
 import { useState } from "react"
 import searchIcon from '../../img/search.svg'
+import { SearchContainer, SearchInput, SubmitBtn } from "./styles";
 
 const SearchBar = ({onSearch}) => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -11,17 +12,17 @@ const SearchBar = ({onSearch}) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="search-container" >
-            <input 
+        <SearchContainer onSubmit={handleSubmit} >
+            <SearchInput 
                 type="text"
                 placeholder="Buscar artista"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <button type="submit" className="search-button" >
+            <SubmitBtn type="submit" className="search-button" >
                 <img src={searchIcon} alt="buscar" />
-            </button>
-        </form>
+            </SubmitBtn>
+        </SearchContainer>
     )
     
 }

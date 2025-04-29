@@ -1,8 +1,13 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const useFetchSongs = (endPoint) => { // obtiene los datos de la url con el endpoint proporcionado
     const [songsState, setSongsState] = useState({songs: [], isLoading: true, error: null});
+    const [reloadTrigger, setReloadTrigger] = useState(0);
+
+    const refetch = useCallback(() => {
+        setReloadTrigger(prev => prev + 1);
+    }, []);
 
     useEffect(() => {
         if(!endPoint) return;
@@ -33,9 +38,9 @@ const useFetchSongs = (endPoint) => { // obtiene los datos de la url con el endp
         };
 
         fetchSongs();
-    }, [endPoint]);
+    }, [endPoint, reloadTrigger]);
 
-    return songsState;
+    return {...songsState, refetch};
 }
 
 export default useFetchSongs;

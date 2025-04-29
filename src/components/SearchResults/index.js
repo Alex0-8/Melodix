@@ -1,19 +1,19 @@
 import React from "react";
 import Song from "../Song/song"
-import './SearchResultsStyles.css';
 import useFetchSongs from "../../hooks/UseFetchSongs";
 import { Link } from "react-router-dom";
 import loadingGif from "../../img/loading5.gif"
 import randomSvg from "../../img/random.svg"
+import { AddToLibraryBtn, RandomBtn, ResultsContainer, RetryBtn, SongContainer } from "./styles";
 
 
 // obtiene la funcion del boton de app.js, el endpoint para el usefetchsong, el searchterm para mostrar cuando no se pudo encontrar al 
 // artista y la funcion del boton de artista aleatorio
 const SearchResults = ({searchRandom, searchTerm, endPoint, onAdd}) => { 
-    const {songs, isLoading, error} = useFetchSongs(endPoint);
+    const {songs, isLoading, error, refetch} = useFetchSongs(endPoint);
 
     const renderSongs = () => (
-        <section className="search-results">
+        <ResultsContainer>
             <div>
                 <h2>Resultados de busqueda</h2>
             </div>
@@ -21,21 +21,21 @@ const SearchResults = ({searchRandom, searchTerm, endPoint, onAdd}) => {
                 const {idAlbum, strAlbum, strArtist, strLabel} = song;
 
                 return ( //pone a cada resultado de la bisqueda dentro de un div
-                    <div key={idAlbum} className="songs">
+                    <SongContainer key={idAlbum} className="songs">
                         <Song name={strLabel} artist={strArtist} album={strAlbum} />
                         <Link to={`/song_details/${idAlbum}`}>Detalles</Link> {/* usa el id del album como parametro de song details*/}
-                        <button className="add-to-library" onClick={() => onAdd(song)} >Agregar a mi biblioteca</button>
+                        <AddToLibraryBtn className="add-to-library" onClick={() => onAdd(song)} >Agregar a mi biblioteca</AddToLibraryBtn>
                         {console.log(songs)}
-                    </div>
+                    </SongContainer>
                 )
             })}
-        </section>
+        </ResultsContainer>
     );
 
     const renderContent = () => {
-        if(isLoading) return <section className="search-results"><img src={loadingGif} alt="Cargando..." /></section>
-        if(error) return <section className="search-results"><p>Error al cargar</p></section>;
-        if(!isLoading && songs.length === 0) return <section className="search-results"><h2>No se encontró: {searchTerm}</h2><button className="random-button" onClick={searchRandom}><img src={randomSvg} alt="Buscar artista aleatorio"></img></button></section>
+        if(isLoading) return <ResultsContainer><img src={loadingGif} alt="Cargando..." /></ResultsContainer>
+        if(error) return <ResultsContainer hasError><h2>Error al cargar</h2><RetryBtn onClick={refetch}>Reintentar</RetryBtn></ResultsContainer>;
+        if(!isLoading && songs.length === 0) return <ResultsContainer notFound><h2>No se encontró: {searchTerm}</h2><RandomBtn onClick={searchRandom}><img src={randomSvg} alt="Buscar artista aleatorio"></img></RandomBtn></ResultsContainer>
         return renderSongs();
     }
 

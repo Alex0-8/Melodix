@@ -2,9 +2,11 @@ import React, {useEffect, useState} from 'react';
 import Header from './components/Header/header';
 import SearchResults from './components/SearchResults';
 import UserLibrary from './components/UserLibrary';
-import './styles.css';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import SongDetails from './components/SongDetails.js';
+import { ThemeProvider } from 'styled-components';
+import GlobalStyle from './theme/globalStyles.js';
+import Theme from './theme';
 
 const App = () => {
   const location = useLocation(); //variable para poder ocultar el searchbar usando el uselocation de react router
@@ -49,31 +51,34 @@ const App = () => {
   }
 
   return (
-    <div className="App">
-      <Header 
-        //le pasa la funcion handle search como prop al search bar que se renderiza en el header
-        onSearch={handleSearch} 
-        hideSearch={location.pathname.startsWith('/song_details')}/> {/*le pasa la pagina de song-detail como prop al header*/}
-      <Routes>
+    <ThemeProvider theme={Theme}>
+      <GlobalStyle />
+        <div className="App">
+          <Header 
+            //le pasa la funcion handle search como prop al search bar que se renderiza en el header
+            onSearch={handleSearch} 
+            hideSearch={location.pathname.startsWith('/song_details')}/> {/*le pasa la pagina de song-detail como prop al header*/}
+          <Routes>
 
-        <Route path='/' 
-          element={
-            <main>
-              <UserLibrary 
-                addedSong={library} 
-                onRemove={removeSongFromLibrary} />
+            <Route path='/' 
+              element={
+                <main>
+                  <UserLibrary 
+                    addedSong={library} 
+                    onRemove={removeSongFromLibrary} />
 
-              <SearchResults 
-                searchRandom={randomNum}
-                searchTerm={searchData} 
-                endPoint= {searchData ? `searchalbum.php?s=${encodeURIComponent(searchData)}` : `album.php?i=1120${randomAlbum}`} 
-                onAdd={addSongToLibrary} />
-            </main>
-          } />
-          
-        <Route path='/song_details/:id' element={<SongDetails /> } />
-      </Routes>
-    </div>
+                  <SearchResults 
+                    searchRandom={randomNum}
+                    searchTerm={searchData} 
+                    endPoint= {searchData ? `searchalbum.php?s=${encodeURIComponent(searchData)}` : `album.php?i=1120${randomAlbum}`} 
+                    onAdd={addSongToLibrary} />
+                </main>
+              } />
+              
+            <Route path='/song_details/:id' element={<SongDetails /> } />
+          </Routes>
+        </div>
+    </ThemeProvider>
   );   
 }
 
