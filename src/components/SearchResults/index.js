@@ -5,12 +5,15 @@ import { Link } from "react-router-dom";
 import loadingGif from "../../img/loading5.gif"
 import randomSvg from "../../img/random.svg"
 import { AddToLibraryBtn, RandomBtn, ResultsContainer, RetryBtn, SongContainer } from "./styles";
+import { useDispatch } from "react-redux";
+import { addSong } from "../../redux/libraryActions";
 
 
-// obtiene la funcion del boton de app.js, el endpoint para el usefetchsong, el searchterm para mostrar cuando no se pudo encontrar al 
+// obtiene el endpoint para el usefetchsong, el searchterm para mostrar cuando no se pudo encontrar al 
 // artista y la funcion del boton de artista aleatorio
-const SearchResults = ({searchRandom, searchTerm, endPoint, onAdd}) => { 
+const SearchResults = ({searchRandom, searchTerm, endPoint}) => { 
     const {songs, isLoading, error, refetch} = useFetchSongs(endPoint);
+    const dispatch = useDispatch(); // usa el hook useDispatch para obtener la funcion del boton de añadir a la biblioteca
 
     const renderSongs = () => (
         <ResultsContainer>
@@ -24,7 +27,7 @@ const SearchResults = ({searchRandom, searchTerm, endPoint, onAdd}) => {
                     <SongContainer key={idAlbum} className="songs">
                         <Song name={strLabel} artist={strArtist} album={strAlbum} />
                         <Link to={`/song_details/${idAlbum}`}>Detalles</Link> {/* usa el id del album como parametro de song details*/}
-                        <AddToLibraryBtn className="add-to-library" onClick={() => onAdd(song)} >Agregar a mi biblioteca</AddToLibraryBtn>
+                        <AddToLibraryBtn className="add-to-library" onClick={() => dispatch(addSong(song))} >Agregar a mi biblioteca</AddToLibraryBtn>
                         {console.log(songs)}
                     </SongContainer>
                 )

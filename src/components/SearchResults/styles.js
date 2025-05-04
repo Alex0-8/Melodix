@@ -20,12 +20,12 @@ const ResultsContainer = styled.section`
         border-radius: 5px;
     }
 
-    &::webkit-scrollbar-thumb {
+    &::-webkit-scrollbar-thumb {
         background-color: #c92ff8;
         border-radius: 5px;
     }
 
-    & > h2 {
+    & h2 {
         text-align: center;
     }
 `;

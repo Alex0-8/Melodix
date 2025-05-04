@@ -31,13 +31,13 @@ const LibraryHeader = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    & > svg {
+    & svg {
         width: 22px;
         fill: #000;
     }
 
     @media (prefers-color-scheme: dark){
-        & > svg{
+        & svg{
             fill: #b3b3b3;
         }
     }

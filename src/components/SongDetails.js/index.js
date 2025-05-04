@@ -16,9 +16,9 @@ const SongDetails = () => {
                     src={albumData.strAlbumThumb} 
                     alt={albumData.strAlbum}/>
             )}
-            <p><span>Artista:</span> {albumData.strArtist}</p>
-            <p><span>Año:</span> {albumData.intYearReleased}</p>
-            <p><span>Género:</span> {albumData.strGenre}</p>
+            <p><span>Artista:</span> {albumData.strArtist || "No hay datos disponibles"}</p>
+            <p><span>Año:</span> {albumData.intYearReleased || "No hay datos disponibles."}</p>
+            <p><span>Género:</span> {albumData.strGenre || "No hay datos disponibles."}</p>
             <DetailsDescription><span>Descripción:</span> {albumData.strDescriptionEN || "No hay descripcion disponible"}</DetailsDescription> {/*si la descripcion está vacia muestra un mensaje*/}
         </PageSongdetails>
     )
