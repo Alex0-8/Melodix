@@ -1,14 +1,17 @@
 import { useState } from "react"
 import searchIcon from '../../img/search.svg'
 import { SearchContainer, SearchInput, SubmitBtn } from "./styles";
+import { useDispatch } from "react-redux";
+import { setSearchTerm } from "../../redux/slices/searchSlice";
 
-const SearchBar = ({onSearch}) => {
-    const [searchTerm, setSearchTerm] = useState('');
+const SearchBar = () => {
+    const [searchTerm, setTerm] = useState('');
+    const dispatch = useDispatch();
 
     const handleSubmit = (e) => { // previene el comportamiento por default del formulario y le da al onSearch el termino buscado
         console.log("recibido: ", searchTerm)
         e.preventDefault();
-        onSearch(searchTerm);
+        dispatch(setSearchTerm(searchTerm));
     };
 
     return (
@@ -17,7 +20,7 @@ const SearchBar = ({onSearch}) => {
                 type="text"
                 placeholder="Buscar artista"
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => setTerm(e.target.value)}
             />
             <SubmitBtn type="submit" className="search-button" >
                 <img src={searchIcon} alt="buscar" />

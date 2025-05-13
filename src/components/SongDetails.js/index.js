@@ -1,12 +1,20 @@
 import { useParams } from 'react-router-dom';
-import useFetchSongs from '../../hooks/UseFetchSongs';
 import loadingGif from "../../img/loading5.gif";
 import { AlbumImg, DetailsDescription, LoadingImg, PageSongdetails } from './styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchSongs } from '../../redux/slices/searchSlice';
+import { useEffect } from 'react';
 
 const SongDetails = () => {
     const {id} = useParams(); 
-    const {songs, isLoading, error} = useFetchSongs(`album.php?m=${id}`); // usa el parametro id para darselo a usefetch songs
+    const dispatch = useDispatch();    
+    const {results: songs, loading: isLoading, error} = useSelector(state => state.results);
+    console.log(songs);
     const albumData = songs[0];
+
+    useEffect(() => {
+        dispatch(fetchSongs(`album.php?m=${id}`));
+    }, [id, dispatch]);
 
     const renderSong = () => (
         <PageSongdetails>
@@ -24,9 +32,9 @@ const SongDetails = () => {
     )
 
     const renderContent = () => {
-        if(isLoading) return <section className='page-song-details'><LoadingImg src={loadingGif} alt='Cargando...' /></section>;
-        if(!albumData) return <section><p>No se encontró el album</p></section>;
-        if(error) return <section className="page-song-details"><p>Error al cargar</p></section>;
+        if(isLoading) return <PageSongdetails><LoadingImg src={loadingGif} alt='Cargando...' /></PageSongdetails>;
+        if(error) return <PageSongdetails><p>Error al cargar</p></PageSongdetails>;
+        if(!albumData) return <PageSongdetails><p>No se encontró el album</p></PageSongdetails>;
         return renderSong();
     }
 

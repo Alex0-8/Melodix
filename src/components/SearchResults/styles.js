@@ -77,8 +77,6 @@ const RandomBtn = styled.button`
 
 const RetryBtn = styled.button`
     width: 100px;
-    height: 17px;
-    font-size: 17px;
     margin: 0 auto;
     background-color: #00ff38;
     border-radius: 8px;

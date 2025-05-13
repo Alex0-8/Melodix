@@ -1,10 +1,12 @@
-import { createStore, combineReducers } from "redux";
-import libraryReducer from "./libraryReducer";
+import libraryReducer from "./slices/librarySlice";
+import { configureStore } from "@reduxjs/toolkit";
+import resultsReducer from "./slices/searchSlice";
 
-const rootReducer = combineReducers({
-  library: libraryReducer
+const store = configureStore({
+  reducer: {
+    library: libraryReducer,
+    results: resultsReducer
+  }
 });
-
-const store = createStore(rootReducer);
 
 export default store;
